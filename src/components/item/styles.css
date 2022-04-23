@@ -1,0 +1,6 @@
+.Item {
+    padding: 0 30px;
+    max-width: calc(100% / 3);
+    width: 360px;
+    text-align: center;
+}
