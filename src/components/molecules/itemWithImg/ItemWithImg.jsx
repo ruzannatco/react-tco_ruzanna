@@ -1,8 +1,8 @@
 import './styles.css'
-import {Img} from "../img/Img";
-import {Description} from "../description/Description";
+import {Img} from "../../atoms/img/Img";
+import {Description} from "../../atoms/description/Description";
 
-export function Item(props) {
+export function ItemWithImg(props) {
     return (
         <li className="Item" data-id={props.id}>
             <Img src={props.src}/>

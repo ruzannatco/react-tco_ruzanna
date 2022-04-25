@@ -1,0 +1,17 @@
+.Stars {
+    font-size: 12px;
+    text-align: center;
+    color: #5dba2f;
+}
+
+.Stars span:before{
+    content: "\2605";
+}
+
+.Stars .big{
+    font-size: 16px;
+}
+
+.Stars .bigger{
+    font-size: 18px;
+}
