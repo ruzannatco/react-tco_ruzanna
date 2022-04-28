@@ -1,9 +1,9 @@
 import './styles.css'
 
-export function LinkBtn(props) {
+export const LinkBtn = (props) => {
     return (
         <a href={props.link} className="btn btn_link">
-            {props.linkName}
+            {props.children}
             <i>&rarr;</i>
         </a>
     );

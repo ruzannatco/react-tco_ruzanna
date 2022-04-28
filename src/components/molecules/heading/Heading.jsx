@@ -3,11 +3,11 @@ import {Stars} from "../stars/Stars";
 import {Title} from "../../atoms/title/Title";
 import {Subtitle} from "../../atoms/subtitle/Subtitle";
 
-export function Heading(props){
+export const Heading = (props) => {
     return (
         <div className="heading-box">
-            <Stars />
-            <Title title={props.title} greentitle={props.greentitle} />
+            <Stars/>
+            <Title title={props.title} greentitle={props.greentitle}/>
             <Subtitle subtitle={props.subtitle}/>
         </div>
     );

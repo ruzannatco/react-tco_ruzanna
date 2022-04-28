@@ -13,6 +13,10 @@
     transition: all .3s ease;
 }
 
+.btn_link i{
+    margin-left: 4px;
+}
+
 .btn:hover{
     background-color: #111;
     color: #fff;

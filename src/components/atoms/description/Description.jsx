@@ -1,6 +1,6 @@
 import './styles.css'
 
-export function Description(props) {
+export const Description = (props) => {
     return (
         <p className="Description">
             {props.description}

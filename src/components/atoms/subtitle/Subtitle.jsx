@@ -1,5 +1,5 @@
 import './styles.css'
 
-export function Subtitle(props) {
+export const Subtitle = (props) => {
     return <p className="Subtitle">{props.subtitle}</p>;
   }
