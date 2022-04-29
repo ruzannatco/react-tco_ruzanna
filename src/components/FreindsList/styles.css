@@ -1,0 +1,9 @@
+.friendsList{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+}

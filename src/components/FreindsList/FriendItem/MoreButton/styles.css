@@ -1,0 +1,31 @@
+.more_btn{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 0;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: background-color .25s ease;
+}
+
+.more_btn span{
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #e4e6eb;
+    margin: 0 1.5px;
+    transition: background-color .25s ease;
+}
+
+.more_btn:hover{
+    background-color: #e4e6eb;
+}
+
+.more_btn:hover span{
+    background-color: #242526;
+}

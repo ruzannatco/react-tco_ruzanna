@@ -8,6 +8,8 @@
 
 body {
   font-family: 'Noto Serif Armenian', serif;
+  background-color: #242526;
+
 }
 
 .list-unstyled{
@@ -18,4 +20,10 @@ body {
   max-width: 1170px;
   padding: 50px 15px;
   margin: 0 auto;
+}
+
+.flex-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
