@@ -19,21 +19,3 @@ body {
   padding: 50px 15px;
   margin: 0 auto;
 }
-
-.box-shadow{
-  border: 1px solid #f2f4fb;
-  border-radius: 20px;
-  box-shadow: 0 1px 4px 0 rgb(46 61 73 / 10%);
-  padding: 40px;
-  background: white;
-  margin-bottom: 42px;
-}
-
-.inner-box{
-  display: flex;
-}
-
-.w-50{
-  width: 50%;
-  padding: 0 15px;
-}
