@@ -1,0 +1,13 @@
+.main-body {
+  width: 100%;
+  height: calc(100% - 100px);
+  padding: 30px;
+  /*background-color: grey;*/
+}
+
+.card-list{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 50px 30px;
+  grid-auto-rows: 200px;
+}
