@@ -1,0 +1,14 @@
+.nav-item {
+  font-size: 22px;
+  color: #727072;
+  margin-left: 30px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.nav-item:hover {
+  color: #000;
+}
+
+.nav-item.active {
+  color: #000;
+}
