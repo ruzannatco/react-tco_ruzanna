@@ -1,0 +1,8 @@
+.form-select{
+    border-color: #727072;
+}
+
+.form-select:focus{
+    box-shadow: none;
+    border-color: #727072;
+}

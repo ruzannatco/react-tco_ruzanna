@@ -1,16 +1,16 @@
 import "./styles.css";
-import {TASKS_DAMI_LIST} from "../../../../const";
-import {Card} from "./Card";
+import {TODO_LIST_MOCK_DATA} from "../../../../mockdata";
+import {CardComponent} from "../../CardComponent";
+import {CardGroup} from "reactstrap";
 
 export const Body = () => {
-    const cardItem = TASKS_DAMI_LIST.map(card => {
-        return <Card key={card.id} card={card}/>
-    })
     return (
         <div className="main-body">
-            <ul className="card-list">
-                {cardItem}
-            </ul>
+            <div className="card-list">
+                {TODO_LIST_MOCK_DATA.map((todo) => {
+                    return <CardComponent key={todo._id} todo={todo} />
+                })}
+            </div>
         </div>
     );
 };
