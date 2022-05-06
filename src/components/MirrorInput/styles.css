@@ -1,0 +1,15 @@
+.paragraph{
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.mirror-input input{
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.mirror-input input:focus{
+    outline: none;
+}
