@@ -2,8 +2,9 @@ import {Card, CardBody, CardImg, CardTitle, CardText, Button, CardFooter} from "
 import "./styles.css"
 import {BACKEND_URL} from "../../../const";
 import {getTasks} from "../../../api";
+import moment from 'moment';
 
-export const CardComponent = ({todo: {title, description, _id}, setTasks}) => {
+export const CardComponent = ({todo: {title, description, _id, created_at}, setTasks}) => {
 
     const handleDeleteTask = (e) => {
         const {target} = e;
@@ -28,6 +29,7 @@ export const CardComponent = ({todo: {title, description, _id}, setTasks}) => {
             <CardBody>
                 <CardTitle tag="h5">{title}</CardTitle>
                 <CardText>{description}</CardText>
+                <CardText className="date">Created at: {moment(created_at).format("DD/MM/YYYY")}</CardText>
                 <CardFooter>
                     <Button outline>Done</Button>
                     <Button data-id={_id} onClick={handleDeleteTask}>Delete</Button>

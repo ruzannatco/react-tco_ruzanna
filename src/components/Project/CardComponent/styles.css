@@ -36,6 +36,11 @@
     overflow: hidden;
 }
 
+.card .card-text.date{
+    margin-left: auto;
+    font-style: italic;
+}
+
 .card .btn{
     margin-top: auto;
     padding: 6px 30px;
