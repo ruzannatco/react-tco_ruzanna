@@ -1,9 +1,25 @@
-import {Card, CardBody, CardImg, CardTitle, CardText, Button} from "reactstrap";
+import {Card, CardBody, CardImg, CardTitle, CardText, Button, CardFooter} from "reactstrap";
 import "./styles.css"
+import {BACKEND_URL} from "../../../const";
+import {getTasks} from "../../../api";
 
-export const CardComponent = ({todo: {title, description, todo_at, status}}) => {
+export const CardComponent = ({todo: {title, description, _id}, setTasks}) => {
+
+    const handleDeleteTask = (e) => {
+        const {target} = e;
+        const taskId = target.dataset.id;
+        fetch(`${BACKEND_URL}/task/${taskId}`, {
+            method: "DELETE"
+        })
+            .then((response) => response.json())
+            .then(response => console.log(response))
+
+        getTasks().then((data) => {
+            setTasks(data);
+        });
+    }
     return (
-        <Card className="custom-card">
+        <Card className="custom-card" data-id={_id}>
             <CardImg
                 alt="Card image"
                 src="https://picsum.photos/318/180"
@@ -12,7 +28,10 @@ export const CardComponent = ({todo: {title, description, todo_at, status}}) => 
             <CardBody>
                 <CardTitle tag="h5">{title}</CardTitle>
                 <CardText>{description}</CardText>
-                <Button>Done</Button>
+                <CardFooter>
+                    <Button outline>Done</Button>
+                    <Button data-id={_id} onClick={handleDeleteTask}>Delete</Button>
+                </CardFooter>
             </CardBody>
         </Card>
     );
