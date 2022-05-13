@@ -1,8 +1,9 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {useRef, useState} from "react";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
+import {BACKEND_URL} from "../../../../../../const";
 
-export const AddTaskForm = ({onSubmitCallback}) => {
+export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
     const titleInputRef = useRef(null);
     const descriptionInputRef = useRef(null);
 
@@ -15,13 +16,37 @@ export const AddTaskForm = ({onSubmitCallback}) => {
         description: {
             value: "",
             error: undefined,
-            validations: [isRequired, minLength3, maxLength20],
+            validations: [isRequired, minLength3],
         }
     });
 
     const onSubmit = (e) => {
         e.preventDefault();
-        // onSubmitCallback();
+
+        const {
+            title: { value: title },
+            description: { value: description },
+        } = inputsData;
+
+        const formData = {
+            title,
+            description,
+        };
+
+        fetch(`${BACKEND_URL}/task`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setTasks((prev) => {
+                    return [...prev, data];
+                })
+                onSubmitCallback();
+            })
     };
 
     const handleChange = (e) => {

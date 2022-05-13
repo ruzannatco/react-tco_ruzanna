@@ -5,7 +5,7 @@ import "./styles.css"
 import {ModalComponent} from "./ModalComponent";
 import {useState} from "react";
 
-export const HeadRight = () => {
+export const HeadRight = ({setTasks}) => {
     const [modalToggle, setModalToggle] = useState(false);
     const handleModalToggle = () => setModalToggle(!modalToggle)
     return (
@@ -13,7 +13,7 @@ export const HeadRight = () => {
           <Button outline onClick={handleModalToggle} aria-expanded={modalToggle}>Add New Task</Button>
           <SortSelect/>
           <Search/>
-          <ModalComponent modalToggle={modalToggle} handleModalToggle={handleModalToggle}/>
+          <ModalComponent modalToggle={modalToggle} handleModalToggle={handleModalToggle} setTasks={setTasks}/>
       </div>
     );
 }

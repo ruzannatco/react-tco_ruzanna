@@ -1,9 +1,9 @@
 import "./styles.css";
 import {HeadRight} from "./HeadRight";
 
-export const Head = () => {
+export const Head = ({setTasks}) => {
     return <div className="main-head">
         <h1>Project Tasks</h1>
-        <HeadRight/>
+        <HeadRight setTasks={setTasks} />
     </div>;
 };

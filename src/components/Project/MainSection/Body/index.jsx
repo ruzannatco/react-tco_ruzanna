@@ -1,12 +1,21 @@
 import "./styles.css";
-import {TODO_LIST_MOCK_DATA} from "../../../../mockdata";
 import {CardComponent} from "../../CardComponent";
 
-export const Body = () => {
+//componentDidMount (Works only one time)
+// useEffect(() => {
+
+// }, []);
+
+//componentDidUpdate (Works after any update)
+// useEffect(() => {
+
+// });
+
+export const Body = ({tasks}) => {
     return (
         <div className="main-body">
             <div className="card-list">
-                {TODO_LIST_MOCK_DATA.map((todo) => {
+                {tasks.map((todo) => {
                     return <CardComponent key={todo._id} todo={todo} />
                 })}
             </div>
