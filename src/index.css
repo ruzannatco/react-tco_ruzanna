@@ -147,6 +147,10 @@ img {
     height: auto;
 }
 
+textarea{
+    resize: none!important;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     color: #000;
