@@ -1,0 +1,5 @@
+.main-head_right{
+    display: grid;
+    grid-gap: 10px;
+    place-items: flex-end;
+}

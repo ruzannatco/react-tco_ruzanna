@@ -168,3 +168,11 @@ input {
 input:focus {
     outline: none;
 }
+
+body.modal-open{
+    padding-right: 0!important;
+}
+
+.btn{
+    padding: 6px 20px;
+}
