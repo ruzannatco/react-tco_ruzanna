@@ -1,7 +1,6 @@
 import "./styles.css";
 import {TODO_LIST_MOCK_DATA} from "../../../../mockdata";
 import {CardComponent} from "../../CardComponent";
-import {CardGroup} from "reactstrap";
 
 export const Body = () => {
     return (
