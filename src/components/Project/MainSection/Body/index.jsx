@@ -11,12 +11,12 @@ import {CardComponent} from "../../CardComponent";
 
 // });
 
-export const Body = ({tasks, setTasks}) => {
+export const Body = ({tasks}) => {
     return (
         <div className="main-body">
             <div className="card-list">
                 {tasks.map((todo) => {
-                    return <CardComponent setTasks={setTasks} key={todo._id} todo={todo} />
+                    return <CardComponent key={todo._id} todo={todo} />
                 })}
             </div>
         </div>

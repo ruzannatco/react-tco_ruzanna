@@ -51,6 +51,7 @@
     border: 0;
     margin-top: auto;
     background-color: transparent;
+    display: flex;
 }
 
 .card .card-footer .btn{

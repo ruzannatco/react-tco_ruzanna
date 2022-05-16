@@ -1,10 +1,10 @@
 import {Card, CardBody, CardImg, CardTitle, CardText, Button, CardFooter} from "reactstrap";
 import "./styles.css"
 import {BACKEND_URL} from "../../../const";
-import {getTasks} from "../../../api";
 import moment from 'moment';
+import {StatusBtn} from "./StatusBtn";
 
-export const CardComponent = ({todo: {title, description, _id, created_at}, setTasks}) => {
+export const CardComponent = ({todo: {title, description, _id, created_at, status}}) => {
 
     const handleDeleteTask = (e) => {
         const {target} = e;
@@ -14,13 +14,15 @@ export const CardComponent = ({todo: {title, description, _id, created_at}, setT
         })
             .then((response) => response.json())
             .then(response => console.log(response))
+            .then(() =>
+                document.getElementById(taskId).remove()
+            )
 
-        getTasks().then((data) => {
-            setTasks(data);
-        });
     }
+
+
     return (
-        <Card className="custom-card" data-id={_id}>
+        <Card className="custom-card" id={_id}>
             <CardImg
                 alt="Card image"
                 src="https://picsum.photos/318/180"
@@ -31,7 +33,7 @@ export const CardComponent = ({todo: {title, description, _id, created_at}, setT
                 <CardText>{description}</CardText>
                 <CardText className="date">Created at: {moment(created_at).format("DD/MM/YYYY")}</CardText>
                 <CardFooter>
-                    <Button outline>Done</Button>
+                    <StatusBtn status={status}/>
                     <Button data-id={_id} onClick={handleDeleteTask}>Delete</Button>
                 </CardFooter>
             </CardBody>

@@ -18,7 +18,7 @@ export const MainSection = () => {
     return (
         <div className="main">
             <Head setTasks={setTasks} />
-            <Body tasks={tasks} setTasks={setTasks} />
+            <Body tasks={tasks} />
         </div>
     );
 };
