@@ -5,17 +5,30 @@ import './styles.css'
 
 
 export const FilterSection = () => {
+    const statusList = [
+        {
+            value: 'active',
+            label: 'Active'
+        },
+        {
+            value: 'done',
+            label: 'Done'
+        }
+    ]
+    const [status, setStatus] = useState('active');
     const [createLte, setCreateLte] = useState(new Date());
     const [createGte, setCreateGte] = useState(new Date());
     const [completeLte, setCompleteLte] = useState(new Date());
     const [completeGte, setCompleteGte] = useState(new Date());
+
     return (
         <div className="filter-section">
             <div className="filter-wrapper">
                 <p>Select status</p>
-                <select>
-                    <option value="active">Active</option>
-                    <option value="done">Done</option>
+                <select value={status} onChange={e => setStatus(e.target.value)}>
+                    {statusList.map((option, index) => (
+                        <option key={index} value={option.value}>{option.label}</option>
+                    ))}
                 </select>
             </div>
             <div className="filter-wrapper">

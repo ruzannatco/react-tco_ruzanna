@@ -5,8 +5,8 @@ import "./styles.css";
 export const Project = () => {
     return (
         <div className="project-layout">
-            <FilterSection/>
-            <MainSection/>
+            <FilterSection />
+            <MainSection />
         </div>
     );
 };
