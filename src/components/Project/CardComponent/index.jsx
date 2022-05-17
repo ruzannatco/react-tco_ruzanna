@@ -4,23 +4,14 @@ import {BACKEND_URL} from "../../../const";
 import moment from 'moment';
 import {StatusBtn} from "./StatusBtn";
 
-export const CardComponent = ({todo: {title, description, _id, created_at, status}}) => {
-
-    const handleDeleteTask = (e) => {
-        const {target} = e;
-        const taskId = target.dataset.id;
-        fetch(`${BACKEND_URL}/task/${taskId}`, {
-            method: "DELETE"
-        })
-            .then((response) => response.json())
-            .then(response => console.log(response))
-            .then(() =>
-                document.getElementById(taskId).remove()
-            )
-
-    }
-
-
+export const CardComponent = ({todo,
+    handleDeleteTask ,
+     handleStatusChange,
+     setEditableTask}) => {
+         
+    const {title, description, _id, created_at, status} = todo
+    const statusState = status === "active" ? "done" : "active";
+    
     return (
         <Card className="custom-card" id={_id}>
             <CardImg
@@ -33,8 +24,10 @@ export const CardComponent = ({todo: {title, description, _id, created_at, statu
                 <CardText>{description}</CardText>
                 <CardText className="date">Created at: {moment(created_at).format("DD/MM/YYYY")}</CardText>
                 <CardFooter>
-                    <StatusBtn status={status}/>
-                    <Button data-id={_id} onClick={handleDeleteTask}>Delete</Button>
+                    {/* <StatusBtn status={status}/> */}
+                    <Button outline onClick={()=>handleStatusChange(_id, statusState)} data-status={status}>{status}</Button>
+                    <Button onClick={()=>handleDeleteTask(_id)}>Delete</Button>
+                    <Button onClick={()=>setEditableTask(todo)}>Edit</Button>
                 </CardFooter>
             </CardBody>
         </Card>
