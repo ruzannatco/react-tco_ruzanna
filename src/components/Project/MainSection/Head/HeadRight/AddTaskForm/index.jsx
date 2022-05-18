@@ -108,7 +108,7 @@ export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
                     <FormFeedback>{inputsData.description.error}</FormFeedback>
                 )}
             </FormGroup>
-            <Button color="primary" onClick={onSubmit}>
+            <Button color="primary" onClick={onSubmit} disabled={!!inputsData.title.error || !!inputsData.description.error}>
                 Add Task
             </Button>{" "}
             <Button>Clear</Button>{" "}

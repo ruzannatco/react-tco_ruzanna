@@ -14,40 +14,34 @@ import { EditModal } from "./EditModal";
 
 // });
 
-export const Body = ({tasks,setTasks}) => {
-    const [editableTask, setEditableTask] = useState(null);
-    // setEditableTask(prev=>{
-    //         tasks.filter((task) => {
-    //             return prev = task._id === _id
-    //     });
+export const Body = ({tasks, setTasks}) => {
+    const [editableTask, setEditableTask] = useState([]);
+    const [toggleEditModal, setToggleEditModal] = useState(false);
+
+    const handleEditModal = () =>toggleEditModal ? setToggleEditModal(false) : setToggleEditModal(true);
 
     const handleDeleteTask = useCallback((_id) => {
         fetch(`${BACKEND_URL}/task/${_id}`, {
             method: "DELETE"
         })
-            .then((response) => response.json())
-            .then(response =>{
+            .then(() => {
                 setTasks(prev=>{
-                    prev.map((item) => {
-                        if(item._id === _id){
-                            return response
-                        }
-                        return item
-                    });
+                    return prev.filter(task => {
+                        return task._id !== _id
+                    })
                 })
             })
-            
 
     },[])
 
-    const handleStatusChange = useCallback((_id, statusState) => {
+    const handleStatusChange = useCallback((_id, status) => {
         fetch(`${BACKEND_URL}/task/${_id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                status: statusState
+                status
             })
         })
             .then(res => {
@@ -55,11 +49,13 @@ export const Body = ({tasks,setTasks}) => {
             })
             .then(data => {
                 setTasks(prev=>{
-                    prev.filter((task) => {
-                        return task._id !== data._id
-                    });
+                    return prev.map(item=>{
+                        if(item._id === data._id) {
+                            return data
+                        }
+                        return item
+                    })
                 })
-
             })
     },[])
 
@@ -68,11 +64,17 @@ export const Body = ({tasks,setTasks}) => {
             <div className="card-list">
                 {tasks.map((todo) => {
                     return <CardComponent key={todo._id} todo={todo}
-                     handleDeleteTask={handleDeleteTask}
-                      handleStatusChange={handleStatusChange}
-                      setEditableTask={setEditableTask} />
+                                          handleDeleteTask={handleDeleteTask}
+                                          handleStatusChange={handleStatusChange}
+                                          setEditableTask={setEditableTask}
+                                          handleEditModal={handleEditModal} />
                 })}
-                <EditModal editableTask={editableTask} setTasks={setTasks} setEditableTask={setEditableTask}/>
+                <EditModal editableTask={editableTask}
+                           toggleEditModal={toggleEditModal}
+                           handleEditModal={handleEditModal}
+                           setTasks={setTasks} onClose={() => {
+                    setToggleEditModal(false)
+                }}/>
             </div>
         </div>
     );

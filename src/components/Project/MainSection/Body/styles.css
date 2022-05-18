@@ -1,7 +1,8 @@
 .main-body {
   width: 100%;
-  min-height: calc(100% - 100px);
+  /*min-height: calc(100% - 100px);*/
   padding: 30px;
+  flex: 1 0 auto;
 }
 
 .card-list{

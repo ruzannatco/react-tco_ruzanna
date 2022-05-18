@@ -46,22 +46,54 @@
     padding: 6px 30px;
 }
 
+.card .btn:focus{
+    box-shadow: none!important;
+}
+
 .card .card-footer{
     padding: 0;
     border: 0;
     margin-top: auto;
     background-color: transparent;
     display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-.card .card-footer .btn{
+.card .card-status{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 20px;
+    width: 100%;
+}
+
+.card .card-footer .btn,
+.card .card-status .btn{
     margin-right: 20px;
 }
 
-.card .card-footer .btn-outline-secondary{
+.card .card-footer .card-footer_btn .btn{
+    min-width: 110px;
+}
+
+.card .card-footer .btn-outline-secondary,
+.card .card-status .btn-outline-secondary{
     color: rgba(240,226,217);
 }
 
-.card .card-footer .btn-outline-secondary:hover{
+.card .card-footer .btn-outline-secondary:hover,
+.card .card-status .btn-outline-secondary:hover{
     color: white;
+}
+
+.card .card-status .btn{
+    padding: 3px 10px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.card .card-status .btn.btn-done{
+    background-color: transparent;
+    color: rgba(240,226,217);
 }

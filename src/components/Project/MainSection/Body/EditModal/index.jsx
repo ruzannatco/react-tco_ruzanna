@@ -1,19 +1,15 @@
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import { EditTaskForm } from "./EditTaskForm";
 
-export const EditModal = ({editableTask ,setTasks, setEditableTask}) => {
+export const EditModal = ({editableTask ,setTasks, handleEditModal, toggleEditModal}) => {
     return (
-        <Modal isOpen={!!editableTask}>
-            <ModalHeader>
-                Edit Task
-            </ModalHeader>
+        <Modal toggle={handleEditModal} isOpen={toggleEditModal}>
+            <ModalHeader toggle={handleEditModal}>Edit Task</ModalHeader>
             <ModalBody>
-               <EditTaskForm setTasks={setTasks} editableTask={editableTask} setEditableTask={setEditableTask} />
+               <EditTaskForm setTasks={setTasks} editableTask={editableTask} onSubmitCallback={handleEditModal}/>
             </ModalBody>
             <ModalFooter>
-                <Button>
-                    Cancel
-                </Button>
+                <Button onClick={handleEditModal}>Cancel</Button>
             </ModalFooter>
         </Modal>
     )

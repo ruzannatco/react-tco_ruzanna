@@ -3,18 +3,17 @@ import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/val
 import { BACKEND_URL } from "../../../../../../const";
 import {useRef, useState} from "react";
 
-export const EditTaskForm = ({setEditableTask, editableTask, setTasks}) => {
-    const titleInputRef = useRef(null);
-    const descriptionInputRef = useRef(null);
-    
+export const EditTaskForm = ({editableTask, setTasks, onSubmitCallback}) => {
+    const {title: defaultTitle, description: defaultDescription } = editableTask
+
     const [inputsData, setInputsData] = useState({
         title: {
-            value: "",
+            value: defaultTitle,
             error: undefined,
             validations: [isRequired, minLength3, maxLength20],
         },
         description: {
-            value: "",
+            value: defaultDescription,
             error: undefined,
             validations: [isRequired, minLength3],
         }
@@ -40,17 +39,22 @@ export const EditTaskForm = ({setEditableTask, editableTask, setTasks}) => {
             },
             body: JSON.stringify(formData),
         })
-        .then((response) => response.json())
-        .then((data) => {
-            setTasks((prev) => {
-                return [...prev, data];
+        .then((res) => res.json())
+        .then(data => {
+            setTasks(prev=>{
+                return prev.map(item=>{
+                    if(item._id === data._id) {
+                        return data
+                    }
+                    return item
+                })
             })
-            setEditableTask(null);
+            onSubmitCallback();
         })
 
     };
 
-    const handleChange = (e) => {
+    const handleInputChange = (e) => {
         const { value, name } = e.target;
         const { validations } = inputsData[name];
 
@@ -86,9 +90,8 @@ export const EditTaskForm = ({setEditableTask, editableTask, setTasks}) => {
                     id="title"
                     name="title"
                     placeholder="Task title"
-                    innerRef={titleInputRef}
-                    defaultValue={editableTask.title}
-                    onChange={handleChange}
+                    defaultValue={defaultTitle}
+                    onChange={handleInputChange}
                     invalid={!!inputsData.title.error}
                 />
                 {!!inputsData.title.error && (
@@ -102,16 +105,15 @@ export const EditTaskForm = ({setEditableTask, editableTask, setTasks}) => {
                     name="description"
                     placeholder="Task description"
                     type="textarea"
-                    innerRef={descriptionInputRef}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     invalid={!!inputsData.description.error}
-                    defaultValue={editableTask.description}
+                    defaultValue={defaultDescription}
                 />
                 {!!inputsData.description.error && (
                     <FormFeedback>{inputsData.description.error}</FormFeedback>
                 )}
             </FormGroup>
-            <Button color="primary" onClick={onSubmit}>
+            <Button color="primary" onClick={onSubmit} disabled={!!inputsData.title.error || !!inputsData.description.error}>
                 Edit Task
             </Button>{" "}
             <Button>Clear</Button>{" "}
