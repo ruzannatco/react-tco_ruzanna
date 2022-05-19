@@ -2,7 +2,7 @@ import {Body} from "./Body";
 import {Head} from "./Head";
 import "./styles.css";
 import {useEffect, useState} from "react";
-import { getTasks } from "../../../api";
+import { getFilteredTasks, getTasks } from "../../../api";
 
 export const MainSection = () => {
     /* Local State */
@@ -15,9 +15,25 @@ export const MainSection = () => {
         });
     }, []);
 
+    const handleSelect = (e) => {
+        const {value} = e.target;
+
+        getFilteredTasks(`sort=${value}`).then((data) => {
+            setTasks(data);
+        });
+    }
+
+    const handleSearchChange = (e) => {
+        const {value} = e.target;
+
+        getFilteredTasks(`search=${value}`).then((data) => {
+            setTasks(data);
+        });
+    }
+
     return (
         <div className="main">
-            <Head setTasks={setTasks} />
+            <Head setTasks={setTasks} handleSelect={handleSelect} handleSearchChange={handleSearchChange} />
             <Body tasks={tasks} setTasks={setTasks}/>
         </div>
     );

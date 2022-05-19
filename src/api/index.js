@@ -11,3 +11,7 @@ function get(url) {
 export function getTasks() {
     return get(`${BACKEND_URL}/task`)
 }
+
+export function getFilteredTasks(filter) {
+    return get(`${BACKEND_URL}/task?${filter}`)
+}

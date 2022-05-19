@@ -1,9 +1,9 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
 import { BACKEND_URL } from "../../../../../../const";
-import {useRef, useState} from "react";
+import {useState} from "react";
 
-export const EditTaskForm = ({editableTask, setTasks, onSubmitCallback}) => {
+export const EditTaskForm = ({editableTask, setTasks, onCloseModal}) => {
     const {title: defaultTitle, description: defaultDescription } = editableTask
 
     const [inputsData, setInputsData] = useState({
@@ -49,7 +49,7 @@ export const EditTaskForm = ({editableTask, setTasks, onSubmitCallback}) => {
                     return item
                 })
             })
-            onSubmitCallback();
+            onCloseModal()
         })
 
     };

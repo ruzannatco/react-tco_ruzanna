@@ -6,7 +6,7 @@ import moment from 'moment';
 export const CardComponent = memo(({todo,
     handleDeleteTask ,
     handleStatusChange,
-    setEditableTask, handleEditModal}) => {
+    setEditableTask}) => {
          
     const {title, description, _id, created_at, status} = todo
     const nextStatus = status === "active" ? "done" : "active";
@@ -31,7 +31,7 @@ export const CardComponent = memo(({todo,
                     <div className="card-footer_btn">
                         <Button onClick={()=> {
                             setEditableTask(todo)
-                            handleEditModal()
+
                         }}>Edit</Button>
                         <Button onClick={()=>handleDeleteTask(_id)}>Delete</Button>
                     </div>
