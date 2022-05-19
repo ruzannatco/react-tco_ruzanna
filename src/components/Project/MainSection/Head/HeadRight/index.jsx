@@ -8,22 +8,36 @@ import { getFilteredTasks } from "../../../../../api";
 
 export const HeadRight = ({setTasks}) => {
     const [modalToggle, setModalToggle] = useState(false);
-    const handleModalToggle = () => setModalToggle(!modalToggle)
+    const handleModalToggle = () => setModalToggle(!modalToggle);
+    const [searchFilter, setSearchFilter] = useState('');
+    const [sortFilter, setSortFilter] = useState('');
 
     const handleSelect = (e) => {
       const {value} = e.target;
+      setSortFilter(value);
 
-      getFilteredTasks(`sort=${value}`).then((data) => {
-          setTasks(data);
-      });
+      if(searchFilter){
+        searchSortGetRequest(`sort=${value}&search=${searchFilter}`)
+      }else{
+        searchSortGetRequest(`sort=${value}`)
+      }
     }
 
   const handleSearchChange = (e) => {
       const {value} = e.target;
-      getFilteredTasks(`search=${value}`).then((data) => {
-          setTasks(data);
-      });
+      setSearchFilter(value);
+       if(sortFilter){
+        searchSortGetRequest(`sort=${sortFilter}&search=${value}`)
+      }else{
+        searchSortGetRequest(`search=${value}`)
+      }
   }
+
+  const searchSortGetRequest = (request) => {
+     getFilteredTasks(request).then((data) => {
+        setTasks(data);
+    });
+  } 
     return (
       <div className="main-head_right">
           <Button outline onClick={handleModalToggle} aria-expanded={modalToggle}>Add New Task</Button>
