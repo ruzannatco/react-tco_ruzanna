@@ -3,8 +3,9 @@ import {Search} from "./Search";
 import {Button} from "reactstrap";
 import "./styles.css"
 import {ModalComponent} from "./ModalComponent";
-import {useState} from "react";
-import { getFilteredTasks } from "../../../../../api";
+import {useState,useEffect} from "react";
+import {getFilteredTasks} from "../../../../../api";
+
 
 export const HeadRight = ({setTasks}) => {
     const [modalToggle, setModalToggle] = useState(false);
@@ -12,32 +13,33 @@ export const HeadRight = ({setTasks}) => {
     const [searchFilter, setSearchFilter] = useState('');
     const [sortFilter, setSortFilter] = useState('');
 
+    useEffect(() => {
+        if(searchFilter && sortFilter){
+            getFilteredTasks(`sort=${sortFilter}&search=${searchFilter}`).then((data) => {
+                setTasks(data);
+            })
+        }else if(searchFilter){
+            getFilteredTasks(`search=${searchFilter}`).then((data) => {
+                setTasks(data);
+            })
+        }else if(sortFilter){
+            getFilteredTasks(`sort=${sortFilter}`).then((data) => {
+                setTasks(data);
+            })
+        }
+    }, [sortFilter,searchFilter,setTasks]);
+
+
     const handleSelect = (e) => {
       const {value} = e.target;
       setSortFilter(value);
-
-      if(searchFilter){
-        searchSortGetRequest(`sort=${value}&search=${searchFilter}`)
-      }else{
-        searchSortGetRequest(`sort=${value}`)
-      }
     }
 
-  const handleSearchChange = (e) => {
+    const handleSearchChange = (e) => {
       const {value} = e.target;
       setSearchFilter(value);
-       if(sortFilter){
-        searchSortGetRequest(`sort=${sortFilter}&search=${value}`)
-      }else{
-        searchSortGetRequest(`search=${value}`)
-      }
-  }
+    }
 
-  const searchSortGetRequest = (request) => {
-     getFilteredTasks(request).then((data) => {
-        setTasks(data);
-    });
-  } 
     return (
       <div className="main-head_right">
           <Button outline onClick={handleModalToggle} aria-expanded={modalToggle}>Add New Task</Button>
