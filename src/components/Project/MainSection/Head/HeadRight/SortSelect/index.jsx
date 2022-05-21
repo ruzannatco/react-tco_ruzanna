@@ -1,7 +1,8 @@
+import { memo } from "react";
 import {Input} from "reactstrap";
 import "./styles.css"
 
-export const SortSelect = ({handleSelect}) => {
+export const SortSelect = memo(({handleSelect}) => {
     return (
         <Input name="sort_by" type="select" className="custom-select" onChange={handleSelect}>
             <option value="">Sort By</option>
@@ -13,4 +14,4 @@ export const SortSelect = ({handleSelect}) => {
             <option value="completion_date_newest">Completed newest</option>
         </Input>
     );
-}
+})

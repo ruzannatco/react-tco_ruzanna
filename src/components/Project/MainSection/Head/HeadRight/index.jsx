@@ -3,7 +3,7 @@ import {Search} from "./Search";
 import {Button} from "reactstrap";
 import "./styles.css"
 import {ModalComponent} from "./ModalComponent";
-import {useState,useEffect} from "react";
+import {useState,useEffect, useCallback} from "react";
 import {getFilteredTasks} from "../../../../../api";
 
 
@@ -30,15 +30,15 @@ export const HeadRight = ({setTasks}) => {
     }, [sortFilter,searchFilter,setTasks]);
 
 
-    const handleSelect = (e) => {
+    const handleSelect = useCallback((e) => {
       const {value} = e.target;
       setSortFilter(value);
-    }
+    }, [])
 
-    const handleSearchChange = (e) => {
+    const handleSearchChange = useCallback((e) => {
       const {value} = e.target;
       setSearchFilter(value);
-    }
+    }, [])
 
     return (
       <div className="main-head_right">
