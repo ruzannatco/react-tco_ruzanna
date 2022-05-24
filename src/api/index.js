@@ -8,8 +8,8 @@ function get(url) {
         });
 }
 
-export function getTasks() {
-    return get(`${BACKEND_URL}/task`)
+export function getTasksRequest(query) {
+    return get(`${BACKEND_URL}/task${query ? `?${query}` : ''}`);
 }
 
 export function getFilteredTasks(filter) {
