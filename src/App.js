@@ -1,11 +1,14 @@
 import {Header} from "./layout/Header";
-import {ProjectPage} from "./pages/Project";
+import {BrowserRouter} from "react-router-dom";
+import {RoutesComponent} from "./components/Routes";
 
 function App() {
     return (
         <div className="App" id="Wrapper">
-            <Header/>
-            <ProjectPage/>
+            <BrowserRouter>
+                <Header/>
+                <RoutesComponent />
+            </BrowserRouter>
         </div>
     );
 }
