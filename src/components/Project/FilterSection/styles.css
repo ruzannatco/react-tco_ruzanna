@@ -1,7 +1,28 @@
 .filter-section {
   width: 300px;
-  height: 100%;
   /*background-color: #b18e2c;*/
   background-color: #ae7862;
   padding: 30px;
+}
+
+.filter-wrapper{
+  margin-bottom: 20px;
+}
+
+.filter-wrapper p{
+  margin-bottom: 0;
+  color: #e6cfbf;
+  font-weight: 500;
+}
+
+.filter-wrapper select{
+  width: 100%;
+}
+
+.filter-wrapper select:focus{
+  outline: none;
+}
+
+.filter-wrapper input[type="text"]{
+  width: 100%;
 }

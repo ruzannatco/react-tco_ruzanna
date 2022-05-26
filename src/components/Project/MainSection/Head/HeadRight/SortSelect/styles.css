@@ -1,8 +1,12 @@
-.form-select{
-    border-color: #727072;
+.form-select.custom-select{
+    color: #000;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #727072;
+    font-size: 16px;
 }
 
-.form-select:focus{
+.form-select.custom-select:focus{
     box-shadow: none;
     border-color: #727072;
 }

@@ -1,20 +1,19 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
-import {useRef, useState} from "react";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
-import {BACKEND_URL} from "../../../../../../const";
+import { BACKEND_URL } from "../../../../../../const";
+import {useState} from "react";
 
-export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
-    const titleInputRef = useRef(null);
-    const descriptionInputRef = useRef(null);
+export const EditTaskForm = ({editableTask, setTasks, onCloseModal}) => {
+    const {title: defaultTitle, description: defaultDescription } = editableTask
 
     const [inputsData, setInputsData] = useState({
         title: {
-            value: "",
+            value: defaultTitle,
             error: undefined,
             validations: [isRequired, minLength3, maxLength20],
         },
         description: {
-            value: "",
+            value: defaultDescription,
             error: undefined,
             validations: [isRequired, minLength3],
         }
@@ -33,23 +32,29 @@ export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
             description,
         };
 
-        fetch(`${BACKEND_URL}/task`, {
-            method: "POST",
+        fetch(`${BACKEND_URL}/task/${editableTask._id}`, {
+            method: 'PUT',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(formData),
         })
-            .then((response) => response.json())
-            .then((data) => {
-                setTasks((prev) => {
-                    return [...prev, data];
+        .then((res) => res.json())
+        .then(data => {
+            setTasks(prev=>{
+                return prev.map(item=>{
+                    if(item._id === data._id) {
+                        return data
+                    }
+                    return item
                 })
-                onSubmitCallback();
             })
+            onCloseModal()
+        })
+
     };
 
-    const handleChange = (e) => {
+    const handleInputChange = (e) => {
         const { value, name } = e.target;
         const { validations } = inputsData[name];
 
@@ -85,8 +90,8 @@ export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
                     id="title"
                     name="title"
                     placeholder="Task title"
-                    innerRef={titleInputRef}
-                    onChange={handleChange}
+                    defaultValue={defaultTitle}
+                    onChange={handleInputChange}
                     invalid={!!inputsData.title.error}
                 />
                 {!!inputsData.title.error && (
@@ -100,16 +105,16 @@ export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
                     name="description"
                     placeholder="Task description"
                     type="textarea"
-                    innerRef={descriptionInputRef}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     invalid={!!inputsData.description.error}
+                    defaultValue={defaultDescription}
                 />
                 {!!inputsData.description.error && (
                     <FormFeedback>{inputsData.description.error}</FormFeedback>
                 )}
             </FormGroup>
             <Button color="primary" onClick={onSubmit} disabled={!!inputsData.title.error || !!inputsData.description.error}>
-                Add Task
+                Edit Task
             </Button>{" "}
             <Button>Clear</Button>{" "}
         </Form>
