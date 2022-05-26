@@ -6,7 +6,7 @@ import {ModalComponent} from "./ModalComponent";
 import {useState, useCallback} from "react";
 
 
-export const HeadRight = ({setTasks, getTasks}) => {
+export const HeadRight = ({setTasks, setFilterField}) => {
     const [modalToggle, setModalToggle] = useState(false);
     const handleModalToggle = () => setModalToggle(!modalToggle);
     const [searchFilter, setSearchFilter] = useState('');
@@ -32,13 +32,13 @@ export const HeadRight = ({setTasks, getTasks}) => {
     const handleSelect = useCallback((e) => {
       const {value} = e.target;
       setSortFilter(value);
-      getTasks(['sort', value])
+      setFilterField(['sort', value])
     }, [sortFilter])
 
     const handleSearchChange = useCallback((e) => {
       const {value} = e.target;
       setSearchFilter(value);
-      getTasks(['search', value])
+      setFilterField(['search', value])
     }, [searchFilter])
 
     return (

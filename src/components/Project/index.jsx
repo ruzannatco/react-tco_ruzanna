@@ -1,8 +1,9 @@
 import {FilterSection} from "./FilterSection";
 import {MainSection} from "./MainSection";
 import "./styles.css";
-import { useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {getTasksRequest} from "../../api";
+import {generateQuery} from "../../helpers";
 
 export const Project = () => {
     /* Local State */
@@ -11,34 +12,36 @@ export const Project = () => {
 
     /* useEffects */
     useEffect(() => {
-        getTasksRequest().then((data) => {
+        const query = generateQuery(filterRequest);
+
+        getTasksRequest(query).then((data) => {
             setTasks(data);
         });
-    }, []);
+    }, [filterRequest]);
 
-    useEffect(()=>{
-        console.log("after added", filterRequest)
-        if(filterRequest){
-             let queryString = '';
-             for(let [name, value] of Object.entries(filterRequest)) {
-                 queryString += `${name}=${value}&`;
-             }
-             getTasksRequest(queryString).then((data) => {
-                 setTasks(data);
-             });
-         }
-
-     }, [filterRequest])
-
-    const getTasks = (filterEntries) => {
+    const setFilterField = useCallback((filterEntries) => {
         const [name, value] = filterEntries;
-        setFilterRequest(prev => ({...prev, [name]: value}));
-    }
+
+        setFilterRequest((prev) => {
+            if (!value) {
+                const newFilterRequest = { ...prev };
+                delete newFilterRequest[name];
+                return newFilterRequest;
+            }
+
+            if (prev[name] !== value) {
+                return {
+                    ...prev,
+                    [name]: value,
+                };
+            }
+        });
+    }, [])
 
     return (
         <div className="project-layout">
-            <FilterSection tasks={tasks} setTasks={setTasks} getTasks={getTasks} />
-            <MainSection tasks={tasks} setTasks={setTasks} getTasks={getTasks}/>
+            <FilterSection tasks={tasks} setTasks={setTasks} setFilterField={setFilterField} />
+            <MainSection tasks={tasks} setTasks={setTasks} setFilterField={setFilterField}/>
         </div>
     );
 };

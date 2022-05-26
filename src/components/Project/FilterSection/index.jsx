@@ -2,10 +2,10 @@ import {useState, useCallback} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './styles.css'
-import moment from "moment";
+// import moment from "moment";
 
 
-export const FilterSection = ({getTasks}) => {
+export const FilterSection = ({setFilterField}) => {
     const statusList = [
         {
             value: 'active',
@@ -25,7 +25,7 @@ export const FilterSection = ({getTasks}) => {
         // const newDate = date.toISOString();
         // console.log(date.toISOString().substring(0, 10))
         setCreateLte(date)
-        getTasks(['create_lte', createLte])
+        setFilterField(['create_lte', createLte])
     }, [createLte])
     return (
         <div className="filter-section">
