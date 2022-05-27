@@ -2,6 +2,7 @@ import {Card, CardBody, CardImg, CardTitle, CardText, Button, CardFooter} from "
 import "./styles.css"
 import { memo } from 'react';
 import moment from 'moment';
+import {Link} from "react-router-dom";
 
 export const CardComponent = memo(({todo,
     handleDeleteTask ,
@@ -13,13 +14,18 @@ export const CardComponent = memo(({todo,
 
     return (
         <Card className="custom-card" id={_id}>
-            <CardImg
-                alt="Card image"
-                src="https://picsum.photos/318/180"
-                width="100%"
-            />
+            <Link to={`/project/${_id}`} className="card-img_link">
+                <CardImg
+                    alt="Card image"
+                    src="https://picsum.photos/318/180"
+                    width="100%"
+                />
+            </Link>
+
             <CardBody>
-                <CardTitle tag="h5">{title}</CardTitle>
+                <CardTitle tag="h5">
+                    <Link to={`/project/${_id}`}>{title}</Link>
+                </CardTitle>
                 <CardText>{description}</CardText>
                 <CardFooter>
                     <div className="card-status">

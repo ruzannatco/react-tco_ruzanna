@@ -1,0 +1,24 @@
+.single-task{
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 30px 15px;
+}
+
+.single-task--back{
+    border: 0;
+    background-color: transparent;
+}
+
+/*.single-task--img{*/
+/*    display: block;*/
+/*    margin: 30px auto;*/
+/*}*/
+
+.single-task--content h1{
+    margin-bottom: 30px;
+}
+
+.single-task--description{
+    /*text-align: center;*/
+    margin-top: 30px;
+}
