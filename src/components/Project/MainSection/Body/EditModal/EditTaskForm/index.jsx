@@ -7,7 +7,7 @@ import * as moment from "moment";
 
 export const EditTaskForm = ({editableTask, setTasks, onCloseModal}) => {
     const {title: defaultTitle, description: defaultDescription } = editableTask;
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(editableTask.date));
 
     const [inputsData, setInputsData] = useState({
         title: {
