@@ -9,7 +9,7 @@ export const CardComponent = memo(({todo,
     handleStatusChange,
     setEditableTask}) => {
          
-    const {title, description, _id, created_at, status} = todo
+    const {title, description, _id, created_at, status, date} = todo
     const nextStatus = status === "active" ? "done" : "active";
 
     return (
@@ -27,6 +27,7 @@ export const CardComponent = memo(({todo,
                     <Link to={`/project/${_id}`}>{title}</Link>
                 </CardTitle>
                 <CardText>{description}</CardText>
+                <CardText className="date">Date: {moment(date).format("DD/MM/YYYY")}</CardText>
                 <CardFooter>
                     <div className="card-status">
                         <Button className={status === 'active' ? 'btn-active' : 'btn-done'}

@@ -22,3 +22,14 @@
     /*text-align: center;*/
     margin-top: 30px;
 }
+
+.single-task--date{
+    /*text-align: center;*/
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.single-task--date:not(.created){
+    font-size: 18px;
+    font-weight: bold;
+}

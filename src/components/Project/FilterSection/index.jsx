@@ -17,16 +17,29 @@ export const FilterSection = ({setFilterField}) => {
         }
     ]
     const [status, setStatus] = useState('active');
-    const [createLte, setCreateLte] = useState('');
+    const [createLte, setCreateLte] = useState(new Date());
     const [createGte, setCreateGte] = useState(new Date());
     const [completeLte, setCompleteLte] = useState(new Date());
     const [completeGte, setCompleteGte] = useState(new Date());
     const handleCreateLteChange = useCallback((date) => {
-        // const newDate = date.toISOString();
-        // console.log(date.toISOString().substring(0, 10))
         setCreateLte(date)
         setFilterField(['create_lte', createLte])
     }, [createLte])
+
+    const handleCreateGteChange = useCallback((date) => {
+        setCreateGte(date)
+        setFilterField(['create_gte', createGte])
+    }, [createGte])
+
+    const handleCompleteLteChange = useCallback((date) => {
+        setCompleteLte(date)
+        setFilterField(['complete_lte', completeLte])
+    }, [completeLte])
+
+    const handleCompleteGteChange = useCallback((date) => {
+        setCompleteGte(date)
+        setFilterField(['complete_gte', completeGte])
+    }, [completeGte])
     return (
         <div className="filter-section">
             <div className="filter-wrapper">
@@ -43,15 +56,15 @@ export const FilterSection = ({setFilterField}) => {
             </div>
             <div className="filter-wrapper">
                 <p>Select create_gte:</p>
-                <DatePicker selected={createGte} onChange={(date) => setCreateGte(date)} dateFormat="yyyy-MM-dd" />
+                <DatePicker selected={createGte} onChange={handleCreateGteChange} dateFormat="yyyy-MM-dd" />
             </div>
             <div className="filter-wrapper">
                 <p>Select complete_lte:</p>
-                <DatePicker selected={completeLte} onChange={(date) => setCompleteLte(date)} dateFormat="yyyy-MM-dd" />
+                <DatePicker selected={completeLte} onChange={handleCompleteLteChange} dateFormat="yyyy-MM-dd" />
             </div>
             <div className="filter-wrapper">
                 <p>Select complete_gte:</p>
-                <DatePicker selected={completeGte} onChange={(date) => setCompleteGte(date)} dateFormat="yyyy-MM-dd" />
+                <DatePicker selected={completeGte} onChange={handleCompleteGteChange} dateFormat="yyyy-MM-dd" />
             </div>
         </div>
     );

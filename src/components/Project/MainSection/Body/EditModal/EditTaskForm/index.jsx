@@ -2,9 +2,12 @@ import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
 import { BACKEND_URL } from "../../../../../../const";
 import {useState} from "react";
+import {DatePick} from "../../../../../DatePick";
+import * as moment from "moment";
 
 export const EditTaskForm = ({editableTask, setTasks, onCloseModal}) => {
-    const {title: defaultTitle, description: defaultDescription } = editableTask
+    const {title: defaultTitle, description: defaultDescription } = editableTask;
+    const [startDate, setStartDate] = useState(new Date());
 
     const [inputsData, setInputsData] = useState({
         title: {
@@ -30,6 +33,7 @@ export const EditTaskForm = ({editableTask, setTasks, onCloseModal}) => {
         const formData = {
             title,
             description,
+            date: moment(startDate).format("YYYY-MM-DD"),
         };
 
         fetch(`${BACKEND_URL}/task/${editableTask._id}`, {
@@ -112,6 +116,9 @@ export const EditTaskForm = ({editableTask, setTasks, onCloseModal}) => {
                 {!!inputsData.description.error && (
                     <FormFeedback>{inputsData.description.error}</FormFeedback>
                 )}
+            </FormGroup>
+            <FormGroup>
+                <DatePick startDate={startDate} setStartDate={setStartDate} />
             </FormGroup>
             <Button color="primary" onClick={onSubmit} disabled={!!inputsData.title.error || !!inputsData.description.error}>
                 Edit Task
