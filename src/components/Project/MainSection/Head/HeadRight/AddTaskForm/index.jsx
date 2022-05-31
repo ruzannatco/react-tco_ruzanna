@@ -2,10 +2,13 @@ import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {useRef, useState} from "react";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
 import {BACKEND_URL} from "../../../../../../const";
+import {DatePick} from "../../../../../DatePick";
+import * as moment from "moment";
 
 export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
     const titleInputRef = useRef(null);
     const descriptionInputRef = useRef(null);
+    const [startDate, setStartDate] = useState(new Date());
 
     const [inputsData, setInputsData] = useState({
         title: {
@@ -31,6 +34,7 @@ export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
         const formData = {
             title,
             description,
+            date: moment(startDate).format("YYYY-MM-DD"),
         };
 
         fetch(`${BACKEND_URL}/task`, {
@@ -107,6 +111,9 @@ export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
                 {!!inputsData.description.error && (
                     <FormFeedback>{inputsData.description.error}</FormFeedback>
                 )}
+            </FormGroup>
+            <FormGroup>
+                <DatePick startDate={startDate} setStartDate={setStartDate} />
             </FormGroup>
             <Button color="primary" onClick={onSubmit} disabled={!!inputsData.title.error || !!inputsData.description.error}>
                 Add Task
