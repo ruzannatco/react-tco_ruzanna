@@ -1,8 +1,9 @@
 import "./styles.css";
 import { CardComponent } from "../../CardComponent";
-import { useCallback, useState } from "react";
+import {useCallback, useContext, useState} from "react";
 import { BACKEND_URL } from "../../../../const";
 import { EditModal } from "./EditModal";
+import {MainTaskContext} from "../../../../context";
 
 //componentDidMount (Works only one time)
 // useEffect(() => {
@@ -14,7 +15,8 @@ import { EditModal } from "./EditModal";
 
 // });
 
-export const Body = ({ tasks, setTasks }) => {
+export const Body = () => {
+    const {tasks, setTasks} = useContext(MainTaskContext)
     const [editableTask, setEditableTask] = useState(null);
 
 
@@ -73,7 +75,6 @@ export const Body = ({ tasks, setTasks }) => {
                 {
                     !!editableTask && <EditModal
                         editableTask={editableTask}
-                        setTasks={setTasks}
                         onClose={() => {
                             setEditableTask(null)
                         }}

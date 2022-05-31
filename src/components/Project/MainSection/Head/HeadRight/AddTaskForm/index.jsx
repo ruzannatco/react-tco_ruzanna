@@ -1,11 +1,13 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
-import {useRef, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
 import {BACKEND_URL} from "../../../../../../const";
 import {DatePick} from "../../../../../DatePick";
 import * as moment from "moment";
+import {MainTaskContext} from "../../../../../../context";
 
-export const AddTaskForm = ({onSubmitCallback, setTasks}) => {
+export const AddTaskForm = ({onSubmitCallback}) => {
+    const {setTasks} = useContext(MainTaskContext)
     const titleInputRef = useRef(null);
     const descriptionInputRef = useRef(null);
     const [startDate, setStartDate] = useState(new Date());

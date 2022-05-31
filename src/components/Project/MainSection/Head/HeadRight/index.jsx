@@ -6,28 +6,12 @@ import {ModalComponent} from "./ModalComponent";
 import {useState, useCallback} from "react";
 
 
-export const HeadRight = ({setTasks, setFilterField}) => {
+export const HeadRight = ({setFilterField}) => {
+
     const [modalToggle, setModalToggle] = useState(false);
     const handleModalToggle = () => setModalToggle(!modalToggle);
     const [searchFilter, setSearchFilter] = useState('');
     const [sortFilter, setSortFilter] = useState('');
-
-    // useEffect(() => {
-    //     if(searchFilter && sortFilter){
-    //         getFilteredTasks(`sort=${sortFilter}&search=${searchFilter}`).then((data) => {
-    //             setTasks(data);
-    //         })
-    //     }else if(searchFilter){
-    //         getFilteredTasks(`search=${searchFilter}`).then((data) => {
-    //             setTasks(data);
-    //         })
-    //     }else if(sortFilter){
-    //         getFilteredTasks(`sort=${sortFilter}`).then((data) => {
-    //             setTasks(data);
-    //         })
-    //     }
-    // }, [sortFilter,searchFilter,setTasks]);
-
 
     const handleSelect = useCallback((e) => {
       const {value} = e.target;
@@ -46,7 +30,7 @@ export const HeadRight = ({setTasks, setFilterField}) => {
           <Button outline onClick={handleModalToggle} aria-expanded={modalToggle}>Add New Task</Button>
           <SortSelect handleSelect={handleSelect}/>
           <Search handleSearchChange={handleSearchChange}/>
-          <ModalComponent modalToggle={modalToggle} handleModalToggle={handleModalToggle} setTasks={setTasks}/>
+          <ModalComponent modalToggle={modalToggle} handleModalToggle={handleModalToggle}/>
       </div>
     );
 }

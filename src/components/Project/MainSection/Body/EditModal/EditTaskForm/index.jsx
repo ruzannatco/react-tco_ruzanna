@@ -1,11 +1,13 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
 import { BACKEND_URL } from "../../../../../../const";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {DatePick} from "../../../../../DatePick";
 import * as moment from "moment";
+import {MainTaskContext} from "../../../../../../context";
 
-export const EditTaskForm = ({editableTask, setTasks, onCloseModal}) => {
+export const EditTaskForm = ({editableTask, onCloseModal}) => {
+    const {setTasks} = useContext(MainTaskContext);
     const {title: defaultTitle, description: defaultDescription } = editableTask;
     const [startDate, setStartDate] = useState(new Date(editableTask.date));
 

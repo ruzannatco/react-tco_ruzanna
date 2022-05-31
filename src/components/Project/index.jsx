@@ -1,14 +1,15 @@
 import {FilterSection} from "./FilterSection";
 import {MainSection} from "./MainSection";
 import "./styles.css";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useContext, useEffect, useState} from "react";
 import {getTasksRequest} from "../../api";
 import {generateQuery} from "../../helpers";
+import {MainTaskContext} from "../../context";
 
 export const Project = () => {
     /* Local State */
-    const [tasks, setTasks] = useState([]);
     const [filterRequest, setFilterRequest] = useState({});
+    const {setTasks} = useContext(MainTaskContext);
 
     /* useEffects */
     useEffect(() => {
@@ -41,7 +42,7 @@ export const Project = () => {
     return (
         <div className="project-layout">
             <FilterSection setFilterField={setFilterField} />
-            <MainSection tasks={tasks} setTasks={setTasks} setFilterField={setFilterField}/>
+            <MainSection setFilterField={setFilterField}/>
         </div>
     );
 };
