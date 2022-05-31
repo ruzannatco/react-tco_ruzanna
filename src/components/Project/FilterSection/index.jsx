@@ -16,11 +16,18 @@ export const FilterSection = ({setFilterField}) => {
             label: 'Done'
         }
     ]
-    const [status, setStatus] = useState('active');
+    const [status, setStatus] = useState('');
     const [createLte, setCreateLte] = useState(new Date());
     const [createGte, setCreateGte] = useState(new Date());
     const [completeLte, setCompleteLte] = useState(new Date());
     const [completeGte, setCompleteGte] = useState(new Date());
+
+    const handleStatusChange = useCallback((e) => {
+        const {value} = e.target
+        setStatus(value)
+        setFilterField(['status', value])
+    }, [status])
+
     const handleCreateLteChange = useCallback((date) => {
         setCreateLte(date)
         setFilterField(['create_lte', createLte])
@@ -44,7 +51,8 @@ export const FilterSection = ({setFilterField}) => {
         <div className="filter-section">
             <div className="filter-wrapper">
                 <p>Select status</p>
-                <select value={status} onChange={e => setStatus(e.target.value)}>
+                <select value={status} onChange={handleStatusChange}>
+                    <option value="" >All</option>
                     {statusList.map((option, index) => (
                         <option key={index} value={option.value}>{option.label}</option>
                     ))}

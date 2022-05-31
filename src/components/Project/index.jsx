@@ -40,7 +40,7 @@ export const Project = () => {
 
     return (
         <div className="project-layout">
-            <FilterSection tasks={tasks} setTasks={setTasks} setFilterField={setFilterField} />
+            <FilterSection setFilterField={setFilterField} />
             <MainSection tasks={tasks} setTasks={setTasks} setFilterField={setFilterField}/>
         </div>
     );
