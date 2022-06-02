@@ -110,3 +110,28 @@
     background-color: transparent;
     color: rgba(240,226,217);
 }
+
+.card .delete-card_btn{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.form-check-input[type=checkbox]{
+    cursor: pointer;
+}
+
+.form-check-input[type=checkbox]{
+    width: 30px;
+    height: 30px;
+}
+
+.form-check-input[type=checkbox]:focus{
+    box-shadow: none;
+    border-color: #e6cfbf;
+}
+
+.form-check-input[type=checkbox]:checked{
+    background-color: #ae7862;
+    border-color: #e6cfbf;
+}

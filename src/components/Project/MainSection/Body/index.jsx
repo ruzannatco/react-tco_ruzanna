@@ -3,7 +3,8 @@ import { CardComponent } from "../../CardComponent";
 import {useCallback, useContext, useState} from "react";
 import { BACKEND_URL } from "../../../../const";
 import { EditModal } from "./EditModal";
-import {MainTaskContext} from "../../../../context";
+import {DeleteTaskContext, MainTaskContext} from "../../../../context";
+import {Button} from "reactstrap";
 
 //componentDidMount (Works only one time)
 // useEffect(() => {
@@ -18,7 +19,7 @@ import {MainTaskContext} from "../../../../context";
 export const Body = () => {
     const {tasks, setTasks} = useContext(MainTaskContext)
     const [editableTask, setEditableTask] = useState(null);
-
+    const {deletedTasksSet} = useContext(DeleteTaskContext);
 
     const handleDeleteTask = useCallback((_id) => {
         fetch(`${BACKEND_URL}/task/${_id}`, {
@@ -59,29 +60,55 @@ export const Body = () => {
             })
     }, [])
 
+    const handleBatchDelete = () => {
+        const batchDelTasks = Array.from(deletedTasksSet);
+        fetch(`${BACKEND_URL}/task`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                tasks: batchDelTasks
+            })
+        })
+            .then((res) => {res.json()})
+            .then((data) => {
+                setTasks((prev) => {
+                    return prev.filter((task) => !batchDelTasks.includes(task._id))
+                })
+            })
+    }
+
     return (
-        <div className="main-body">
-            <div className="card-list">
-                {tasks.map((todo) => {
-                    return <CardComponent
-                        key={todo._id}
-                        todo={todo}
-                        handleDeleteTask={handleDeleteTask}
-                        handleStatusChange={handleStatusChange}
-                        setEditableTask={setEditableTask}
+        <>
+            {!!deletedTasksSet.size && (
+                <div className="delete_btn">
+                    <Button color="danger" onClick={handleBatchDelete}>Delete All</Button>
+                </div>
+            )}
+            <div className="main-body">
+                <div className="card-list">
+                    {tasks.map((todo) => {
+                        return <CardComponent
+                            key={todo._id}
+                            todo={todo}
+                            handleDeleteTask={handleDeleteTask}
+                            handleStatusChange={handleStatusChange}
+                            setEditableTask={setEditableTask}
+                        />
+                    })}
+                    {
+                        !!editableTask && <EditModal
+                            editableTask={editableTask}
+                            onClose={() => {
+                                setEditableTask(null)
+                            }}
+                        />
+                    }
 
-                    />
-                })}
-                {
-                    !!editableTask && <EditModal
-                        editableTask={editableTask}
-                        onClose={() => {
-                            setEditableTask(null)
-                        }}
-                    />
-                }
-
+                </div>
             </div>
-        </div>
+        </>
+
     );
 };

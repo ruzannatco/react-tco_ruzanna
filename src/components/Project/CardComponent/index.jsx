@@ -1,8 +1,9 @@
-import {Card, CardBody, CardImg, CardTitle, CardText, Button, CardFooter} from "reactstrap";
+import {Card, CardBody, CardImg, CardTitle, CardText, Button, CardFooter, Input} from "reactstrap";
 import "./styles.css"
-import { memo } from 'react';
+import {memo, useContext} from 'react';
 import moment from 'moment';
 import {Link} from "react-router-dom";
+import {DeleteTaskContext} from "../../../context";
 
 export const CardComponent = memo(({todo,
     handleDeleteTask ,
@@ -11,9 +12,13 @@ export const CardComponent = memo(({todo,
          
     const {title, description, _id, created_at, status, date} = todo
     const nextStatus = status === "active" ? "done" : "active";
+    const { toggleDeleteTask } = useContext(DeleteTaskContext)
 
     return (
         <Card className="custom-card" id={_id}>
+            <div className="delete-card_btn">
+                <Input type="checkbox" onClick={() => toggleDeleteTask(_id)}/>
+            </div>
             <Link to={`/project/${_id}`} className="card-img_link">
                 <CardImg
                     alt="Card image"

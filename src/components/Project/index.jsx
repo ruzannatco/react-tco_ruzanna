@@ -10,7 +10,6 @@ export const Project = () => {
     /* Local State */
     const [filterRequest, setFilterRequest] = useState({});
     const {setTasks} = useContext(MainTaskContext);
-
     /* useEffects */
     useEffect(() => {
         const query = generateQuery(filterRequest);
