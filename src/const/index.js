@@ -23,3 +23,14 @@ export const SORT_FIELDS = [
 ]
 
 export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+export const STATUS_LIST = [
+    {
+        value: 'active',
+        label: 'Active'
+    },
+    {
+        value: 'done',
+        label: 'Done'
+    }
+]

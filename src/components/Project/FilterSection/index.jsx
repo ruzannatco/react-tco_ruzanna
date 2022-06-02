@@ -2,20 +2,10 @@ import {useState, useCallback} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './styles.css'
-// import moment from "moment";
+import {STATUS_LIST} from "../../../const";
 
 
 export const FilterSection = ({setFilterField}) => {
-    const statusList = [
-        {
-            value: 'active',
-            label: 'Active'
-        },
-        {
-            value: 'done',
-            label: 'Done'
-        }
-    ]
     const [status, setStatus] = useState('');
     const [createLte, setCreateLte] = useState(new Date());
     const [createGte, setCreateGte] = useState(new Date());
@@ -26,34 +16,34 @@ export const FilterSection = ({setFilterField}) => {
         const {value} = e.target
         setStatus(value)
         setFilterField(['status', value])
-    }, [status])
+    }, [status, setFilterField])
 
     const handleCreateLteChange = useCallback((date) => {
         setCreateLte(date)
         setFilterField(['create_lte', createLte])
-    }, [createLte])
+    }, [createLte, setFilterField])
 
     const handleCreateGteChange = useCallback((date) => {
         setCreateGte(date)
         setFilterField(['create_gte', createGte])
-    }, [createGte])
+    }, [createGte, setFilterField])
 
     const handleCompleteLteChange = useCallback((date) => {
         setCompleteLte(date)
         setFilterField(['complete_lte', completeLte])
-    }, [completeLte])
+    }, [completeLte, setFilterField])
 
     const handleCompleteGteChange = useCallback((date) => {
         setCompleteGte(date)
         setFilterField(['complete_gte', completeGte])
-    }, [completeGte])
+    }, [completeGte, setFilterField])
     return (
         <div className="filter-section">
             <div className="filter-wrapper">
                 <p>Select status</p>
                 <select value={status} onChange={handleStatusChange}>
                     <option value="" >All</option>
-                    {statusList.map((option, index) => (
+                    {STATUS_LIST.map((option, index) => (
                         <option key={index} value={option.value}>{option.label}</option>
                     ))}
                 </select>
