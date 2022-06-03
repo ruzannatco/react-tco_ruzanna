@@ -182,3 +182,9 @@ body.modal-open{
 .btn{
     padding: 6px 20px;
 }
+
+.container{
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 0 15px;
+}

@@ -13,5 +13,10 @@ const maxLength = (length) => (value) => {
         : `The max length must be ${length}`
 }
 
+export const validateEmail = (email) => {
+    const rgx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return rgx.test(String(email).toLowerCase()) ? undefined : "The email is invalid"
+};
+
 export const minLength3 = minLength(3)
 export const maxLength20 = maxLength(20)
