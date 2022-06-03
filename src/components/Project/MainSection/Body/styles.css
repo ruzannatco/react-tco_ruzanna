@@ -12,6 +12,10 @@
   /*grid-auto-rows: 200px;*/
 }
 
+.delete_btn{
+  padding: 30px;
+}
+
 
 @media(max-width: 1660px){
   .card-list{
