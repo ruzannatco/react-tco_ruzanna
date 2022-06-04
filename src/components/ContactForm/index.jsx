@@ -3,26 +3,26 @@ import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {useState} from "react";
 import {isRequired, validateEmail} from "../../helpers/validations";
 import {BACKEND_URL} from "../../const";
+const defaultContactForm ={
+    name: {
+        value: "",
+        error: undefined,
+        validations: [isRequired]
+    },
+    email: {
+        value: "",
+        error: undefined,
+        validations: [isRequired, validateEmail]
+    },
+    message: {
+        value: "",
+        error: undefined,
+        validations: []
+    },
 
+}
 export const ContactForm = () => {
-    const [contactFormData, setContactFormData] = useState({
-        name: {
-            value: "",
-            error: undefined,
-            validations: [isRequired]
-        },
-        email: {
-            value: "",
-            error: undefined,
-            validations: [isRequired, validateEmail]
-        },
-        message: {
-            value: "",
-            error: undefined,
-            validations: []
-        },
-
-    });
+    const [contactFormData, setContactFormData] = useState(defaultContactForm);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -49,15 +49,15 @@ export const ContactForm = () => {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
-                // setContactFormData((prev) => {
-                //     return {
-                //         ...prev,
-                //         [name]: {
-                //             ...prev[name],
-                //             value: "",
-                //         },
-                //     };
-                // });
+                // e.target.form[0].value = "";
+                // e.target.form[1].value = "";
+                // e.target.form[2].value = "";
+                setContactFormData((prev) => {
+                    return {
+                        ...prev,
+                        defaultContactForm
+                    };
+                });
             })
     };
 
