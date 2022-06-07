@@ -3,6 +3,7 @@ import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {useState} from "react";
 import {isRequired, validateEmail} from "../../helpers/validations";
 import {BACKEND_URL} from "../../const";
+
 const defaultContactForm ={
     name: {
         value: "",
@@ -19,7 +20,6 @@ const defaultContactForm ={
         error: undefined,
         validations: []
     },
-
 }
 export const ContactForm = () => {
     const [contactFormData, setContactFormData] = useState(defaultContactForm);
@@ -48,17 +48,14 @@ export const ContactForm = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
-                // e.target.form[0].value = "";
-                // e.target.form[1].value = "";
-                // e.target.form[2].value = "";
                 setContactFormData((prev) => {
                     return {
                         ...prev,
-                        defaultContactForm
+                        ...defaultContactForm
                     };
                 });
             })
+            .catch(error => console.log(error.message))
     };
 
     const handleChange = (e) => {
@@ -100,6 +97,7 @@ export const ContactForm = () => {
                         placeholder="Name"
                         onChange={handleChange}
                         invalid={!!contactFormData.name.error}
+                        value={contactFormData.name.value}
                     />
                     {!!contactFormData.name.error && (
                         <FormFeedback>{contactFormData.name.error}</FormFeedback>
@@ -114,6 +112,7 @@ export const ContactForm = () => {
                         type="email"
                         onChange={handleChange}
                         invalid={!!contactFormData.email.error}
+                        value={contactFormData.email.value}
                     />
                     {!!contactFormData.email.error && (
                         <FormFeedback>{contactFormData.email.error}</FormFeedback>
@@ -128,6 +127,7 @@ export const ContactForm = () => {
                         type="textarea"
                         onChange={handleChange}
                         invalid={!!contactFormData.message.error}
+                        value={contactFormData.message.value}
                     />
                     {!!contactFormData.message.error && (
                         <FormFeedback>{contactFormData.message.error}</FormFeedback>
