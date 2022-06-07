@@ -16,14 +16,14 @@ export const HeadRight = ({setFilterField}) => {
     const handleSelect = useCallback((e) => {
       const {value} = e.target;
       setSortFilter(value);
-      setFilterField(['sort', value])
-    }, [sortFilter])
+      setFilterField(['sort', sortFilter])
+    }, [sortFilter, setFilterField])
 
     const handleSearchChange = useCallback((e) => {
       const {value} = e.target;
       setSearchFilter(value);
-      setFilterField(['search', value])
-    }, [searchFilter])
+      setFilterField(['search', searchFilter])
+    }, [searchFilter, setFilterField])
 
     return (
       <div className="main-head_right">
