@@ -16,7 +16,7 @@ export const FilterSection = ({setFilterField}) => {
         const {value} = e.target
         setStatus(value)
         setFilterField(['status', value])
-    }, [status, setFilterField])
+    }, [setStatus, setFilterField])
 
     const handleCreateLteChange = useCallback((date) => {
         setCreateLte(date)

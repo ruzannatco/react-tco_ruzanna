@@ -3,21 +3,24 @@ import { CardComponent } from "../../CardComponent";
 import {useCallback, useContext, useState} from "react";
 import { BACKEND_URL } from "../../../../const";
 import { EditModal } from "./EditModal";
-import {DeleteTaskContext, MainTaskContext} from "../../../../context";
+import {DeleteTaskContext} from "../../../../context";
 import {Button} from "reactstrap";
+import {connect} from "react-redux";
+import {
+    removeMultipleTasksAction,
+    removeSingleTaskAction,
+    updatedTaskByIdAction,
+} from "../../../../redux/actions/task-actions";
 
 //componentDidMount (Works only one time)
 // useEffect(() => {
-
 // }, []);
 
 //componentDidUpdate (Works after any update)
 // useEffect(() => {
-
 // });
 
-export const Body = () => {
-    const {tasks, setTasks} = useContext(MainTaskContext)
+const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updatedTaskById}) => {
     const [editableTask, setEditableTask] = useState(null);
     const {deletedTasksSet} = useContext(DeleteTaskContext);
 
@@ -26,14 +29,15 @@ export const Body = () => {
             method: "DELETE"
         })
             .then(() => {
-                setTasks(prev => {
-                    return prev.filter(task => {
-                        return task._id !== _id
-                    })
-                })
+                removeSingleTask(_id);
+                // setTasks(prev => {
+                //     return prev.filter(task => {
+                //         return task._id !== _id
+                //     })
+                // })
             })
 
-    }, [])
+    }, [removeSingleTask])
 
     const handleStatusChange = useCallback((_id, status) => {
         fetch(`${BACKEND_URL}/task/${_id}`, {
@@ -49,16 +53,17 @@ export const Body = () => {
                 return res.json()
             })
             .then(data => {
-                setTasks(prev => {
-                    return prev.map(item => {
-                        if (item._id === data._id) {
-                            return data
-                        }
-                        return item
-                    })
-                })
+                updatedTaskById(data)
+                // setTasks(prev => {
+                //     return prev.map(item => {
+                //         if (item._id === data._id) {
+                //             return data
+                //         }
+                //         return item
+                //     })
+                // })
             })
-    }, [])
+    }, [updatedTaskById])
 
     const handleBatchDelete = () => {
         const batchDelTasks = Array.from(deletedTasksSet);
@@ -72,10 +77,11 @@ export const Body = () => {
             })
         })
             .then((res) => {res.json()})
-            .then((data) => {
-                setTasks((prev) => {
-                    return prev.filter((task) => !batchDelTasks.includes(task._id))
-                })
+            .then(() => {
+                removeMultipleTasks(batchDelTasks)
+                // setTasks((prev) => {
+                //     return prev.filter((task) => !batchDelTasks.includes(task._id))
+                // })
             })
     }
 
@@ -100,6 +106,7 @@ export const Body = () => {
                     {
                         !!editableTask && <EditModal
                             editableTask={editableTask}
+                            updatedTaskById = {updatedTaskById}
                             onClose={() => {
                                 setEditableTask(null)
                             }}
@@ -112,3 +119,14 @@ export const Body = () => {
 
     );
 };
+
+const mapStateToProps = (state) => ({
+    tasks: state.taskReducerState.tasks
+})
+const mapDispatchToProps = (dispatch) => ({
+    removeMultipleTasks: (deletedTasksIds) => dispatch(removeMultipleTasksAction(deletedTasksIds)),
+    removeSingleTask: (deletedTaskId) => dispatch(removeSingleTaskAction(deletedTaskId)),
+    updatedTaskById: (updatedTask) => dispatch(updatedTaskByIdAction(updatedTask))
+})
+
+export const Body = connect(mapStateToProps, mapDispatchToProps)(ConnectedBody)

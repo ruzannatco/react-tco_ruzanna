@@ -1,15 +1,16 @@
 import {FilterSection} from "./FilterSection";
 import {MainSection} from "./MainSection";
 import "./styles.css";
-import {useCallback, useContext, useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {getTasksRequest} from "../../api";
 import {generateQuery} from "../../helpers";
-import {MainTaskContext} from "../../context";
+import {connect} from "react-redux";
+import {setTasksAction} from "../../redux/actions/task-actions";
 
-export const Project = () => {
+const ConnectedProject = ({setTasks}) => {
     /* Local State */
     const [filterRequest, setFilterRequest] = useState({});
-    const {setTasks} = useContext(MainTaskContext);
+
     /* useEffects */
     useEffect(() => {
         const query = generateQuery(filterRequest);
@@ -17,7 +18,7 @@ export const Project = () => {
         getTasksRequest(query).then((data) => {
             setTasks(data);
         });
-    }, [filterRequest]);
+    }, [filterRequest, setTasks]);
 
     const setFilterField = useCallback((filterEntries) => {
         const [name, value] = filterEntries;
@@ -45,3 +46,9 @@ export const Project = () => {
         </div>
     );
 };
+
+export const Project = connect(null, {
+    setTasks: setTasksAction
+})(ConnectedProject)
+
+

@@ -1,13 +1,11 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
 import { BACKEND_URL } from "../../../../../../const";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {DatePick} from "../../../../../DatePick";
 import * as moment from "moment";
-import {MainTaskContext} from "../../../../../../context";
 
-export const EditTaskForm = ({editableTask, onCloseModal}) => {
-    const {setTasks} = useContext(MainTaskContext);
+export const EditTaskForm = ({editableTask, onCloseModal, updatedTaskById}) => {
     const {title: defaultTitle, description: defaultDescription } = editableTask;
     const [startDate, setStartDate] = useState(new Date(editableTask.date));
 
@@ -47,14 +45,15 @@ export const EditTaskForm = ({editableTask, onCloseModal}) => {
         })
         .then((res) => res.json())
         .then(data => {
-            setTasks(prev=>{
-                return prev.map(item=>{
-                    if(item._id === data._id) {
-                        return data
-                    }
-                    return item
-                })
-            })
+            updatedTaskById(data)
+            // setTasks(prev=>{
+            //     return prev.map(item=>{
+            //         if(item._id === data._id) {
+            //             return data
+            //         }
+            //         return item
+            //     })
+            // })
             onCloseModal()
         })
 
