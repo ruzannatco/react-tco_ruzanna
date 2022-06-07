@@ -4,8 +4,10 @@ import { BACKEND_URL } from "../../../../../../const";
 import {useState} from "react";
 import {DatePick} from "../../../../../DatePick";
 import * as moment from "moment";
+import { updateTaskByIdThunk } from "../../../../../../redux/actions/task-actions";
+import { connect } from "react-redux";
 
-export const EditTaskForm = ({editableTask, onCloseModal, updatedTaskById}) => {
+const ConnectedEditTaskForm = ({editableTask, onCloseModal, updateTaskById}) => {
     const {title: defaultTitle, description: defaultDescription } = editableTask;
     const [startDate, setStartDate] = useState(new Date(editableTask.date));
 
@@ -36,26 +38,7 @@ export const EditTaskForm = ({editableTask, onCloseModal, updatedTaskById}) => {
             date: moment(startDate).format("YYYY-MM-DD"),
         };
 
-        fetch(`${BACKEND_URL}/task/${editableTask._id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData),
-        })
-        .then((res) => res.json())
-        .then(data => {
-            updatedTaskById(data)
-            // setTasks(prev=>{
-            //     return prev.map(item=>{
-            //         if(item._id === data._id) {
-            //             return data
-            //         }
-            //         return item
-            //     })
-            // })
-            onCloseModal()
-        })
+        updateTaskById(editableTask._id, formData, onCloseModal)
 
     };
 
@@ -128,3 +111,7 @@ export const EditTaskForm = ({editableTask, onCloseModal, updatedTaskById}) => {
         </Form>
     );
 }
+
+export const EditTaskForm = connect(null, {
+    updateTaskById: updateTaskByIdThunk
+})(ConnectedEditTaskForm)
