@@ -36,10 +36,10 @@ export const taskReducer = ((state = initialState, action) => {
         }
 
         case "UPDATE_TASK_BY_ID" : {
-            const updatedTasks = action.payload
+            const updatedTask = action.payload
             const tasks = state.tasks.map(task => {
-                if (task._id === updatedTasks._id) {
-                    return updatedTasks
+                if (task._id === updatedTask._id) {
+                    return updatedTask
                 }
                 return task
             })

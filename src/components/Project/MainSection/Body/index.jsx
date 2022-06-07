@@ -126,7 +126,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     removeMultipleTasks: (deletedTasksIds) => dispatch(removeMultipleTasksAction(deletedTasksIds)),
     removeSingleTask: (deletedTaskId) => dispatch(removeSingleTaskAction(deletedTaskId)),
-    updatedTaskById: (updatedTasks) => dispatch(updatedTaskByIdAction(updatedTasks))
+    updatedTaskById: (updatedTask) => dispatch(updatedTaskByIdAction(updatedTask))
 })
 
 export const Body = connect(mapStateToProps, mapDispatchToProps)(ConnectedBody)

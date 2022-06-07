@@ -26,9 +26,9 @@ export const addNewTaskAction = (newTask) => {
     }
 }
 
-export const updatedTaskByIdAction = (updatedTasks) => {
+export const updatedTaskByIdAction = (updatedTask) => {
     return {
         type: 'UPDATE_TASK_BY_ID',
-        payload: updatedTasks
+        payload: updatedTask
     }
 }
