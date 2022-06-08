@@ -1,6 +1,5 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
-import { BACKEND_URL } from "../../../../../../const";
 import {useState} from "react";
 import {DatePick} from "../../../../../DatePick";
 import * as moment from "moment";

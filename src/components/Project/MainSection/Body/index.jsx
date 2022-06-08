@@ -21,7 +21,7 @@ import {
 
 const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updateStatusById}) => {
     const [editableTask, setEditableTask] = useState(null);
-    const {deletedTasksSet} = useContext(DeleteTaskContext);
+    const {deletedTasksSet, setDeletedTasksSet} = useContext(DeleteTaskContext);
 
     const handleDeleteTask = useCallback((_id) => {
         removeSingleTask(_id);
@@ -34,6 +34,7 @@ const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updateStat
     const handleBatchDelete = () => {
         const batchDelTasks = Array.from(deletedTasksSet);
         removeMultipleTasks(batchDelTasks)
+        setDeletedTasksSet(new Set());
     }
 
     return (
