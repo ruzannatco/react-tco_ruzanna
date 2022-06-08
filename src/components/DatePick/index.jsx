@@ -1,7 +1,7 @@
 import DatePicker from "react-datepicker";
 
-export const DatePick = ({startDate, setStartDate}) => {
+export const DatePick = ({startDate, setStartDate, name}) => {
     return (
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} dateFormat="yyyy-MM-dd"/>
+        <DatePicker selected={startDate} onChange={(date) => setStartDate(date, name)} dateFormat="yyyy-MM-dd"/>
     );
 };
