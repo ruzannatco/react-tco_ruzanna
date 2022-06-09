@@ -85,35 +85,18 @@ export const getTasksThunk = (query) => (dispatch, getState) => {
         })
   }
 
-  export const updateTaskByIdThunk = (_id, formData, onCloseModal) => (dispatch, getState) => {
+  export const updateTaskByIdThunk = (_id, requestBody, additionalFunction) => (dispatch, getState) => {
+    
     fetch(`${BACKEND_URL}/task/${_id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(requestBody),
     })
     .then((res) => res.json())
     .then(data => {
         dispatch(updatedTaskByIdAction(data))
-        onCloseModal()
+        additionalFunction && additionalFunction()
     })
-  }
-
-  export const updateStatusByIdThunk = (_id, status) => (dispatch, getState) => {
-    fetch(`${BACKEND_URL}/task/${_id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            status
-        })
-    })
-        .then(res => {
-            return res.json()
-        })
-        .then(data => {
-            dispatch(updatedTaskByIdAction(data))
-        })
   }

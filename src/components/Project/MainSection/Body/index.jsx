@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import {
     removeMultipleTasksThunk,
     removeSingleTaskThunk,
-    updateStatusByIdThunk,
+    updateTaskByIdThunk,
 } from "../../../../redux/actions/task-actions";
 
 //componentDidMount (Works only one time)
@@ -19,7 +19,7 @@ import {
 // useEffect(() => {
 // });
 
-const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updateStatusById}) => {
+const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updateTaskById}) => {
     const [editableTask, setEditableTask] = useState(null);
     const {deletedTasksSet, setDeletedTasksSet} = useContext(DeleteTaskContext);
 
@@ -28,8 +28,8 @@ const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updateStat
     }, [removeSingleTask])
 
     const handleStatusChange = useCallback((_id, status) => {
-        updateStatusById(_id, status)
-    }, [updateStatusById])
+        updateTaskById(_id, {status})
+    }, [updateTaskById])
 
     const handleBatchDelete = () => {
         const batchDelTasks = Array.from(deletedTasksSet);
@@ -77,7 +77,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     removeMultipleTasks: (deletedTasksIds) => dispatch(removeMultipleTasksThunk(deletedTasksIds)),
     removeSingleTask: (deletedTaskId) => dispatch(removeSingleTaskThunk(deletedTaskId)),
-    updateStatusById: (updatedTask) => dispatch(updateStatusByIdThunk(updatedTask))
+    updateTaskById: (updatedTaskId , requestBody) => dispatch(updateTaskByIdThunk(updatedTaskId, requestBody))
 })
 
 export const Body = connect(mapStateToProps, mapDispatchToProps)(ConnectedBody)
