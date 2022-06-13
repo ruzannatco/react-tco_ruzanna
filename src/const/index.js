@@ -11,6 +11,14 @@ export const NAVBAR_LINKS = {
         link: "",
         label: "About Me",
     },
+    registration: {
+        link: "registration",
+        label: "Registration"
+    },
+    login: {
+        link: "login",
+        label: "Login"
+    }
 };
 
 export const SORT_FIELDS = [

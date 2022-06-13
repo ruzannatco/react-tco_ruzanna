@@ -19,4 +19,5 @@ export const validateEmail = (email) => {
 };
 
 export const minLength3 = minLength(3)
+export const minLength8 = minLength(8)
 export const maxLength20 = maxLength(20)

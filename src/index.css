@@ -188,3 +188,13 @@ body.modal-open{
     margin: 0 auto;
     padding: 0 15px;
 }
+
+.auth-page form{
+    max-width: 500px;
+    margin: 30px auto;
+}
+
+.auth-page .form-error{
+    font-size: 20px;
+    color: red;
+}

@@ -1,5 +1,6 @@
 import { getTasksRequest } from "../../api";
 import { BACKEND_URL } from "../../const";
+import {getToken} from "../../helpers";
 
 export const setTasksAction = (tasks) => {
     return {
@@ -40,8 +41,14 @@ export const updatedTaskByIdAction = (updatedTask) => {
 
 export const getTasksThunk = (query) => (dispatch, getState) => {
     getTasksRequest(query).then((data) => {
-      dispatch(setTasksAction(data));
-    });
+        if (data.error) {
+            throw data.error
+        }
+        dispatch(setTasksAction(data));
+    })
+        .catch(err => {
+            console.log("err", err)
+        })
   };
 
   export const addNewTaskThunk = (formData, onSubmitCallback) => (dispatch, getState) => {
@@ -49,6 +56,7 @@ export const getTasksThunk = (query) => (dispatch, getState) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${getToken()}`
         },
         body: JSON.stringify(formData),
     })

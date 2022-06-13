@@ -1,7 +1,13 @@
 import { BACKEND_URL } from "../const";
+import {getToken} from "../helpers";
 
 function get(url) {
-    return fetch(url)
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            authorization: `Bearer ${getToken()}`
+        }
+    })
         .then((response) => response.json())
         .then((data) => {
             return data;
