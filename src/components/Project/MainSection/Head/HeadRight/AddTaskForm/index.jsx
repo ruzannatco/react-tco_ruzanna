@@ -1,11 +1,10 @@
 import {Button, Form, FormFeedback, FormGroup, Input, Label} from "reactstrap";
 import {useRef, useState} from "react";
 import {isRequired, maxLength20, minLength3} from "../../../../../../helpers/validations";
-import {BACKEND_URL} from "../../../../../../const";
 import {DatePick} from "../../../../../DatePick";
 import * as moment from "moment";
 import {connect} from "react-redux";
-import {addNewTaskAction} from "../../../../../../redux/actions/task-actions";
+import { addNewTaskThunk } from "../../../../../../redux/actions/task-actions";
 
 const ConnectedAddTaskForm = ({onSubmitCallback, addNewTask}) => {
     const titleInputRef = useRef(null);
@@ -39,21 +38,7 @@ const ConnectedAddTaskForm = ({onSubmitCallback, addNewTask}) => {
             date: moment(startDate).format("YYYY-MM-DD"),
         };
 
-        fetch(`${BACKEND_URL}/task`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                // setTasks((prev) => {
-                //     return [...prev, data];
-                // })
-                addNewTask(data)
-                onSubmitCallback();
-            })
+        addNewTask(formData, onSubmitCallback)
     };
 
     const handleChange = (e) => {
@@ -127,5 +112,5 @@ const ConnectedAddTaskForm = ({onSubmitCallback, addNewTask}) => {
 }
 
 export const AddTaskForm = connect(null, {
-    addNewTask: addNewTaskAction
+    addNewTask: addNewTaskThunk
 })(ConnectedAddTaskForm)

@@ -34,3 +34,10 @@ export const STATUS_LIST = [
         label: 'Done'
     }
 ]
+
+export const FILTER_DATE_PICKERS = [
+    { label: "Created later", value: "create_lte" },
+    { label: "Created gratter", value: "create_gte" },
+    { label: "Completed later", value: "complete_lte" },
+    { label: "Completed gratter", value: "complete_gte" },
+];

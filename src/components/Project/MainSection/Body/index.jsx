@@ -1,15 +1,14 @@
 import "./styles.css";
 import { CardComponent } from "../../CardComponent";
 import {useCallback, useContext, useState} from "react";
-import { BACKEND_URL } from "../../../../const";
 import { EditModal } from "./EditModal";
 import {DeleteTaskContext} from "../../../../context";
 import {Button} from "reactstrap";
 import {connect} from "react-redux";
 import {
-    removeMultipleTasksAction,
-    removeSingleTaskAction,
-    updatedTaskByIdAction,
+    removeMultipleTasksThunk,
+    removeSingleTaskThunk,
+    updateTaskByIdThunk,
 } from "../../../../redux/actions/task-actions";
 
 //componentDidMount (Works only one time)
@@ -20,69 +19,22 @@ import {
 // useEffect(() => {
 // });
 
-const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updatedTaskById}) => {
+const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updateTaskById}) => {
     const [editableTask, setEditableTask] = useState(null);
-    const {deletedTasksSet} = useContext(DeleteTaskContext);
+    const {deletedTasksSet, setDeletedTasksSet} = useContext(DeleteTaskContext);
 
     const handleDeleteTask = useCallback((_id) => {
-        fetch(`${BACKEND_URL}/task/${_id}`, {
-            method: "DELETE"
-        })
-            .then(() => {
-                removeSingleTask(_id);
-                // setTasks(prev => {
-                //     return prev.filter(task => {
-                //         return task._id !== _id
-                //     })
-                // })
-            })
-
+        removeSingleTask(_id);
     }, [removeSingleTask])
 
     const handleStatusChange = useCallback((_id, status) => {
-        fetch(`${BACKEND_URL}/task/${_id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status
-            })
-        })
-            .then(res => {
-                return res.json()
-            })
-            .then(data => {
-                updatedTaskById(data)
-                // setTasks(prev => {
-                //     return prev.map(item => {
-                //         if (item._id === data._id) {
-                //             return data
-                //         }
-                //         return item
-                //     })
-                // })
-            })
-    }, [updatedTaskById])
+        updateTaskById(_id, {status})
+    }, [updateTaskById])
 
     const handleBatchDelete = () => {
         const batchDelTasks = Array.from(deletedTasksSet);
-        fetch(`${BACKEND_URL}/task`, {
-            method: "PATCH",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                tasks: batchDelTasks
-            })
-        })
-            .then((res) => {res.json()})
-            .then(() => {
-                removeMultipleTasks(batchDelTasks)
-                // setTasks((prev) => {
-                //     return prev.filter((task) => !batchDelTasks.includes(task._id))
-                // })
-            })
+        removeMultipleTasks(batchDelTasks)
+        setDeletedTasksSet(new Set());
     }
 
     return (
@@ -106,7 +58,6 @@ const ConnectedBody = ({tasks, removeMultipleTasks, removeSingleTask, updatedTas
                     {
                         !!editableTask && <EditModal
                             editableTask={editableTask}
-                            updatedTaskById = {updatedTaskById}
                             onClose={() => {
                                 setEditableTask(null)
                             }}
@@ -124,9 +75,9 @@ const mapStateToProps = (state) => ({
     tasks: state.taskReducerState.tasks
 })
 const mapDispatchToProps = (dispatch) => ({
-    removeMultipleTasks: (deletedTasksIds) => dispatch(removeMultipleTasksAction(deletedTasksIds)),
-    removeSingleTask: (deletedTaskId) => dispatch(removeSingleTaskAction(deletedTaskId)),
-    updatedTaskById: (updatedTask) => dispatch(updatedTaskByIdAction(updatedTask))
+    removeMultipleTasks: (deletedTasksIds) => dispatch(removeMultipleTasksThunk(deletedTasksIds)),
+    removeSingleTask: (deletedTaskId) => dispatch(removeSingleTaskThunk(deletedTaskId)),
+    updateTaskById: (updatedTaskId , requestBody) => dispatch(updateTaskByIdThunk(updatedTaskId, requestBody))
 })
 
 export const Body = connect(mapStateToProps, mapDispatchToProps)(ConnectedBody)
