@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Button, Form, FormGroup, Input, Label} from "reactstrap";
 import {BACKEND_URL} from "../../const";
+import {useNavigate} from "react-router-dom";
 
 export const Login = () => {
     const [inputsData, setInputsData] = useState({
@@ -13,6 +14,8 @@ export const Login = () => {
             error: undefined,
         },
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -59,6 +62,7 @@ export const Login = () => {
                 const { jwt, refreshToken } = data;
                 localStorage.setItem('token', JSON.stringify(jwt))
                 localStorage.setItem('refreshToken', JSON.stringify(refreshToken))
+                navigate('/project')
 
             })
             .catch((error) => {
